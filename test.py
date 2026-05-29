@@ -19,7 +19,7 @@ if os.path.exists('bg.png'):
         css_code = f"""
         <style>
         .stApp {{
-            background-image: linear-gradient(rgba(255, 255, 255, 0.80), rgba(255, 255, 255, 0.92)), url("data:image/png;base64,{encoded_img}");
+            background-image: linear-gradient(rgba(255, 255, 255, 0.90), rgba(255, 255, 255, 0.92)), url("data:image/png;base64,{encoded_img}");
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -89,6 +89,9 @@ with col1:
 
 with col2:
     st.subheader("📋 상세 내역")
-    for h in reversed(st.session_state.app_data["history"]):
-        st.markdown(f"**{h['date']} | {h['place']}**")
-        st.text(f"인당: {h['dutch_pay']:,}원")
+    if not st.session_state.app_data["history"]:
+        st.info("내역 없음")
+    else:
+        for h in reversed(st.session_state.app_data["history"]):
+         st.markdown(f"**{h['date']} | {h['place']}**")
+         st.text(f"인당: {h['dutch_pay']:,}원")
